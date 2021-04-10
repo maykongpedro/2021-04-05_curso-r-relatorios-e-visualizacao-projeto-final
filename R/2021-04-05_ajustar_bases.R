@@ -2,7 +2,6 @@
 # carregar pipe
 '%>%' <- magrittr::`%>%`
 
-
 # criar diretório básico de projeto
 # fs::dir_create("./dados")
 # fs::dir_create("./R")
@@ -52,16 +51,21 @@ movies %>%
   View()
 
 # juntar legenda de classificação
-raw_bechdel <-
+raw_bechdel_com_legenda <-
   raw_bechdel %>% 
   dplyr::left_join(legend_rating, by = "rating")
+
+# selecionar colunas para join
+raw_bechdel_select <-
+  raw_bechdel_com_legenda %>% 
+  dplyr::select(-c("year", "id", "title"))
 
 # juntar bases
 movies_rating <- 
   movies %>% 
-  dplyr::left_join(raw_bechdel, by = "imdb_id") %>% 
-  dplyr::relocate(38:40, .after = 1:6) %>% 
-  dplyr::select(-c("year.y", "id", "title.y"))
+  dplyr::left_join(raw_bechdel_select, by = "imdb_id") %>% 
+  dplyr::relocate(c("rating", "description", "descricao"), .after = "binary")
+
 
 # verficando resultado final
 dplyr::glimpse(movies_rating)
