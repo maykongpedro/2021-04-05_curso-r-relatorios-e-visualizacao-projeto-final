@@ -1,4 +1,8 @@
 
+# carregar pipe
+'%>%' <- magrittr::`%>%`
+
+
 # criar diretório básico de projeto
 # fs::dir_create("./dados")
 # fs::dir_create("./R")
@@ -41,6 +45,8 @@ legend_rating <-
 # explorar a base de filmes e de teste
 dplyr::glimpse(movies)
 dplyr::glimpse(raw_bechdel)
+dplyr::glimpse(legend_rating)
+
 
 movies %>% 
   View()
@@ -60,7 +66,9 @@ movies_rating <-
 # verficando resultado final
 dplyr::glimpse(movies_rating)
 
-# exportar base em formato .rds
-movies_rating %>% 
-  readr::write_rds("./R/2021-04-09_movies_rating_bechdel_test.rds")
+# exportar bases em formato .rds
+readr::write_rds(movies, "./dados/movies.rds")
+readr::write_rds(raw_bechdel, "./dados/raw_bechdel.rds")
+readr::write_rds(legend_rating, "./dados/legend_rating.rds")
+readr::write_rds(movies_rating, "./R/2021-04-09_movies_rating_bechdel_test.rds")
 
