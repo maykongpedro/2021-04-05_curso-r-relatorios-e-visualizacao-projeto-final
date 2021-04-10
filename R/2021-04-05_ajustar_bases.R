@@ -1,9 +1,9 @@
 
 # criar diretório básico de projeto
 # fs::dir_create("./dados")
-# fs::dir_create("./scripts")
+# fs::dir_create("./R")
 # fs::dir_create("./outputs")
-
+# fs::dir_create("./docs")
 
 # Get the Data
 
@@ -17,7 +17,6 @@ tuesdata <- tidytuesdayR::tt_load(2021, week = 11)
 
 raw_bechdel <- tuesdata$raw_bechdel
 movies <- tuesdata$movies
-
 
 # criando base de legenda para a classificação
 legend_rating <- 
@@ -38,3 +37,30 @@ legend_rating <-
     "About something besides a man",
     "As mulheres falam entre si sobre algo que não seja um homem"
   )
+
+# explorar a base de filmes e de teste
+dplyr::glimpse(movies)
+dplyr::glimpse(raw_bechdel)
+
+movies %>% 
+  View()
+
+# juntar legenda de classificação
+raw_bechdel <-
+  raw_bechdel %>% 
+  dplyr::left_join(legend_rating, by = "rating")
+
+# juntar bases
+movies_rating <- 
+  movies %>% 
+  dplyr::left_join(raw_bechdel, by = "imdb_id") %>% 
+  dplyr::relocate(38:40, .after = 1:6) %>% 
+  dplyr::select(-c("year.y", "id", "title.y"))
+
+# verficando resultado final
+dplyr::glimpse(movies_rating)
+
+# exportar base em formato .rds
+movies_rating %>% 
+  readr::write_rds("./R/2021-04-09_movies_rating_bechdel_test.rds")
+
