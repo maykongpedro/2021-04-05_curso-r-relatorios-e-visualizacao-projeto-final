@@ -29,7 +29,7 @@ legend_rating <-
     ~ descricao,
     0L,
     "unscored",
-    "Não testado",
+    "Sem classificação",
     1L,
     "It has to have at least two [named] women in it",
     "Tem pelo menos duas mulheres nomeadas",
@@ -47,8 +47,8 @@ dplyr::glimpse(raw_bechdel)
 dplyr::glimpse(legend_rating)
 
 
-movies %>% 
-  View()
+# movies %>% 
+#   View()
 
 # juntar legenda de classificação
 raw_bechdel_com_legenda <-
