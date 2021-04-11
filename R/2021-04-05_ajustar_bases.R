@@ -29,7 +29,7 @@ legend_rating <-
     ~ descricao,
     0L,
     "unscored",
-    "Sem classificação",
+    "Sem pontuação",
     1L,
     "It has to have at least two [named] women in it",
     "Tem pelo menos duas mulheres nomeadas",
