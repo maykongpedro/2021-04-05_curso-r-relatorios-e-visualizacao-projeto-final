@@ -44,114 +44,136 @@ movies_rating$descricao <-
 
 # quantidade total de filmes
 total_de_filmes <- nrow(movies_rating)
+total_de_filmes
 
 # quantidade de filmes por ano
 movies_rating %>% 
   dplyr::group_by(year) %>% 
   dplyr::summarise(n = dplyr::n())
 
+
+
+# Visualizar dados --------------------------------------------------------
+
+# definir fonte de texto para os gráficos
+windowsFonts(Palatino=windowsFont("Palatino Linotype"))
+font_family <- "Palatino"
+
+# definir cores
+# pegando o código das cores da paletta viridis
+scales::show_col(viridis::viridis_pal(option = "viridis")(7)) 
+
+# verde escuro
+#paleta_viridis_modificada <- c("#440154", "#443183", "#31688E", "#35B779")
+
+# verde claro
+paleta_viridis_modificada <- c( "#443183", "#31688E", "#21908C","#8FD744")
+
+# verde claro
+paleta_viridis_modificada <- c("#440154", "#443183", "#31688E", "#8FD744")
+
+
+# definir nota de rodapé
+nota_rodape <- "FONTE: Dados Bechdel Test - TidyTuesday: Week 11 (2021)"
+
+
 # quantidade de filmes por ano e por resultado do teste
-movies_rating %>% 
-  dplyr::group_by(year, binary) %>% 
-  dplyr::arrange(year) %>% 
+movies_rating %>%
+  dplyr::group_by(year, binary) %>%
+  dplyr::arrange(year) %>%
   dplyr::summarise(n = dplyr::n()) %>%
   
   ggplot2::ggplot() +
   ggplot2::geom_col(ggplot2::aes(x = year, y = n, fill = binary)) +
-  ggplot2::scale_x_continuous(expand = c(0.01,0.01), breaks = movies_rating$year) +
-  ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, 130)) +
-  ggplot2::scale_fill_viridis_d() +
-  ggplot2::labs(x = "Ano de lançamento", y = "Quantidade de filmes") +
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01), breaks = movies_rating$year) +
+  ggplot2::scale_y_continuous(expand = c(0, 0), limits = c(0, 130)) +
+  #ggplot2::scale_fill_viridis_d() +
+  ggplot2::scale_fill_manual(values = c(paleta_viridis_modificada[1], paleta_viridis_modificada[4])) +
+  ggplot2::labs(
+    x = "Ano de lançamento",
+    y = "Quantidade de filmes",
+    fill = "Teste de Bechdel",
+    caption = nota_rodape
+  ) +
+  ggplot2::ggtitle("Quantidade de Filmes por Ano - Teste de Bechdel") +
   ggplot2::theme_minimal() +
   ggplot2::theme(
-    axis.line.x = ggplot2::element_line(size = 1),
-    axis.text.x = ggplot2::element_text(angle = 90)
-  )
-
+    axis.text.x = ggplot2::element_text(angle = 90),
+    legend.position = c(.30, .78)
+  ) +
+  theme_bechdel_cols(font_family) 
+ 
 
 # quantidade de filmes por ano e por resultado da classificação
-font_grafico <- "Helvetica"
-windowsFonts(Times=windowsFont("Times New Roman"))
-
-movies_rating %>% 
-  dplyr::mutate(rating = as.character(rating)) %>% 
-  tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>% 
-
-  dplyr::group_by(year, binary, rating) %>% 
-  dplyr::arrange(year) %>% 
-  dplyr::summarise(n = dplyr::n()) %>% 
-  # dplyr::mutate(
-  #   rating = factor(
-  #     rating,
-  #     levels = c(0, 1, 2, 3),
-  #     ordered = TRUE
-  #   )
-  #) %>% 
+#plot <-
+movies_rating %>%
+  dplyr::mutate(rating = as.character(rating)) %>%
+  tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>%
+  dplyr::group_by(year, binary, rating) %>%
+  dplyr::arrange(year) %>%
+  dplyr::summarise(n = dplyr::n()) %>%
+  
   ggplot2::ggplot() +
   ggplot2::geom_col(ggplot2::aes(x = year, y = n, fill = rating)) +
-  ggplot2::scale_x_continuous(expand = c(0.01,0.01), breaks = movies_rating$year) +
-  ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, by = 25)) +
-  ggplot2::scale_fill_viridis_d(
-    direction = 1 ,
-    option = "viridis",
+  ggplot2::scale_x_continuous(expand = c(0.01, 0.01), breaks = movies_rating$year) +
+  ggplot2::scale_y_continuous(
+    expand = c(0, 0),
+    limits = c(0, 150),
+    breaks = seq(0, 150, by = 25)
+  ) +
+  ggplot2::scale_fill_manual(
+    values = paleta_viridis_modificada,
     guide = ggplot2::guide_legend(
       keyheight = grid::unit(6, units = "mm"),
       keywidth = grid::unit(9, units = "mm")
     )
   ) +
-  #ggplot2::annotate(geom = "text", x = 2005, y = 25, label = "PASS", colour = "black", size = 10) +
-  # ggplot2::annotate(geom = "text", x = 2005, y = 69, label = "FAIL", colour = "black", size = 9) +
-  ggplot2::labs(x = "Ano de lançamento", y = "Quantidade de filmes", fill = "Pontuação - Teste de Bechdel") +
+  ggplot2::labs(
+    x = "Ano de lançamento", 
+    y = "Quantidade de filmes", 
+    fill = "Pontuação - Teste de Bechdel",
+    caption = nota_rodape) +
   ggplot2::ggtitle("Quantidade de Filmes - Pontuação pelo Teste de Bechdel") +
-  #ggplot2::theme_minimal(13) +
-  ggthemes::theme_clean(base_family = font_grafico)+
+  ggplot2::theme_minimal() +
   ggplot2::theme(
-    text = ggplot2::element_text(color = "#22211d", family = font_grafico),
-    plot.title = ggplot2::element_text(hjust = 0.5),
-    
-    plot.background = ggplot2::element_rect(fill = "#f5f5f2", color = NA),
-    panel.background = ggplot2::element_rect(fill = "#f5f5f2", color = NA),
-    legend.background = ggplot2::element_rect(fill = "transparent", colour = NA),
-    
-    axis.line.x = ggplot2::element_line(size = 1),
     axis.text.x = ggplot2::element_text(angle = 90),
-    axis.line.y = ggplot2::element_blank(),
-    axis.ticks.y = ggplot2::element_blank(),
-    
     legend.position = c(.35, .78),
-    legend.text = ggplot2::element_text(family = font_grafico),
-    legend.title = ggplot2::element_text(face = "bold", family = font_grafico),
-    
-    panel.grid.major.y = ggplot2::element_line(size = .75, color = "#dddddd", linetype = "dashed"),
-    #panel.grid = ggplot2::element_blank()
-    plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm")
-  ) 
-  # ggtext::geom_textbox(
-  #   aes(x = 2005, y = 25, label = "*PASS*"),
-  #   height = grid::unit(8, "mm"),
-  #   width = grid::unit(15, "mm"),
-  #   # 73% of plot panel width
-  #   hjust = 0,
-  #   vjust = 1,
-  # )
-  # ggtext::geom_richtext(
-  #   ggplot2::aes(
-  #     x = 2005,
-  #     y = 25,
-  #     label = "*PASS*",
-  #     fill = after_scale(alpha("#70af85", .5))
-  #   ),
-  #   text.colour = "black",
-  #   hjust = 1, vjust = 1,
-  #   #size = 10
-  # )
+    panel.grid.major.y = ggplot2::element_line(size = .6,color = "#dddddd",linetype = "dashed")
+  ) +
+  theme_bechdel_cols(font_family) +
+  
+  # anotação de "PASS"
+  ggplot2::geom_label(ggplot2::aes(x = 2005, y = 25, label = "PASS"),
+                    hjust = 0.4,
+                    vjust = 0.5,
+                    colour = "#555555",
+                    fill = NA,
+                    label.size = NA,
+                    family= font_family,
+                    size = 10) +
+  
+  # anotação explicativa
+  ggplot2::geom_label(
+    ggplot2::aes(x = 1986, y = 63, label = "Apenas os filmes com \npontuação 3 passam no teste."),
+    hjust = 0.4,
+    vjust = 0.5,
+    colour = "#555555",
+    fill = NA,
+    label.size = NA,
+    family = font_family,
+    size = 4
+  ) +
 
+  # flecha
+  ggplot2::geom_curve(ggplot2::aes(x = 1992, y = 60, xend = 2003, yend = 28), 
+           colour = "#555555", 
+           size=0.5, 
+           curvature = -0.2,
+           arrow = ggplot2::arrow(length = grid::unit(0.03, "npc")))
+           
 
 # quantidade de filmes por ano e por resultado (%)
-windowsFonts(Palatino=windowsFont("Palatino Linotype"))
-font_family <- "Palatino"
-
-plot <-
+#plot <-
   movies_rating %>% 
   dplyr::mutate(rating = as.character(rating)) %>% 
   tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>% 
@@ -165,33 +187,22 @@ plot <-
   ggplot2::scale_y_continuous(expand = c(0,0), labels = scales::percent) +
   #ggplot2::scale_fill_viridis_d(direction = 1 , option = "viridis") +
   ggplot2::scale_fill_manual(values = paleta_viridis_modificada) +
-  ggplot2::labs(x = "Ano de lançamento", y = "") +
+  ggplot2::labs(x = "Ano de lançamento", y = "", caption = nota_rodape) +
   ggplot2::ggtitle("Percentual de filmes por pontuação do teste de Bechdel") +
   ggplot2::theme_minimal(base_family = font_family) +
   ggplot2::theme(
-    
-    text = ggplot2::element_text(color = "#22211d"),
-    plot.title = ggplot2::element_text(hjust = 0.5, family = font_family),
-    
-    plot.background = ggplot2::element_rect(fill = "#f5f5f2", color = NA),
-    panel.background = ggplot2::element_rect(fill = "#f5f5f2", color = NA),
-    legend.background = ggplot2::element_rect(fill = "transparent", colour = NA),
-    
     axis.text.x = ggplot2::element_text(angle = 90),
-    
-    legend.text = ggplot2::element_text(),
     legend.position = "top",
     legend.title = ggplot2::element_blank(),
-    
-    plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm") 
   ) +
+  theme_bechdel_cols(font_family) +
   ggplot2::geom_label(ggplot2::aes(x = 1990, y = 0.20, label = "PASS"),
            hjust = 0.4,
            vjust = 0.5,
            colour = "#555555",
            #fill = "white",
            label.size = NA,
-           family="Palatino",
+           family = font_family,
            size = 10) +
   ggplot2::geom_label(ggplot2::aes(x = 1990, y = 0.83, label = "FAIL"),
                       #hjust = 0.4,
@@ -199,31 +210,28 @@ plot <-
                       colour = "#555555",
                       fill = "white",
                       label.size = NA,
-                      family="Palatino",
+                      family = font_family,
                       size = 10)
 
-
-plot
 
 #ggplot2::unit("top",right","botton", "left")
 
 plot %>% 
-ggplot2::ggsave(filename = "./outputs/plot_percent_movies.png",
+ggplot2::ggsave(filename = "./outputs/plot_quant_movies.png",
                 width = 12,
                 height = 8,
                 dpi = 300)
 
 
-# pegando o código das cores da paletta viridis
-paleta_viridis_modificada <- c("#440154", "#443183", "#31688E", "#8FD744")
-
-scales::show_col(viridis::viridis_pal(option = "viridis")(7)) 
-
 
 # quantidade de filmes por gênero
+movies_rating
 
 
-# filmes com um lucro maior tendem a passar no teste de bechdel?
+
+# quantidade de filmes por país
+
+
 
 # filmes com boas notas no imdb tendem a passar no teste de bechdel?
 
