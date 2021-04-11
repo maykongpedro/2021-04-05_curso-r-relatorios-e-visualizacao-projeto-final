@@ -85,18 +85,45 @@ movies_rating %>%
 
 # quantidade de filmes por ano e por resultado da classificação
 movies_rating %>% 
+  dplyr::mutate(rating = as.character(rating)) %>% 
+  tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>% 
+
   dplyr::group_by(year, binary, rating) %>% 
   dplyr::arrange(year) %>% 
   dplyr::summarise(n = dplyr::n()) %>% 
-
+  # dplyr::mutate(
+  #   rating = factor(
+  #     rating,
+  #     levels = c(0, 1, 2, 3),
+  #     ordered = TRUE
+  #   )
+  #) %>% 
   ggplot2::ggplot() +
   ggplot2::geom_col(ggplot2::aes(x = year, y = n, fill = rating)) +
   ggplot2::scale_x_continuous(expand = c(0.01,0.01), breaks = movies_rating$year) +
   ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, 130)) +
-  ggplot2::scale_fill_viridis_c(direction = -1 ,option = "viridis") +
-  ggplot2::labs(x = "Ano de lançamento", y = "Quantidade de filmes") +
+  ggplot2::scale_fill_viridis_d(
+    direction = 1 ,
+    option = "viridis",
+    guide = ggplot2::guide_legend(
+      keyheight = grid::unit(4, units = "mm"),
+      keywidth = grid::unit(8, units = "mm")
+    )
+  ) +
+  ggplot2::labs(x = "Ano de lançamento", y = "Quantidade de filmes", fill = "Classificação - Bechdel") +
   ggplot2::theme_minimal() +
+  #ggthemes::theme_clean()+
   ggplot2::theme(
     axis.line.x = ggplot2::element_line(size = 1),
-    axis.text.x = ggplot2::element_text(angle = 90)
+    axis.text.x = ggplot2::element_text(angle = 90),
+    legend.position = c(.35, .78)
   )
+
+# quantidade de filmes por ano e por resultado (%)
+
+
+
+# pegando o código das cores da paletta viridis
+scales::show_col(viridis::viridis_pal(option = "viridis")(4)) 
+
+
