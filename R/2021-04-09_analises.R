@@ -43,7 +43,7 @@ movies_rating$descricao <-
 # 1. resultado do teste na base histórica
 
 # quantidade total de filmes
-nrow(movies_rating)
+total_de_filmes <- nrow(movies_rating)
 
 # quantidade de filmes por ano
 movies_rating %>% 
@@ -68,6 +68,7 @@ movies_rating %>%
     axis.text.x = ggplot2::element_text(angle = 90)
   )
 
+# gráfico na horizontal
 movies_rating %>% 
   dplyr::group_by(year, binary) %>% 
   dplyr::arrange(year) %>% 
@@ -86,6 +87,9 @@ movies_rating %>%
 
 
 # quantidade de filmes por ano e por resultado da classificação
+font_grafico <- "Lucida Console"
+windowsFonts(Times=windowsFont("Times New Roman"))
+
 movies_rating %>% 
   dplyr::mutate(rating = as.character(rating)) %>% 
   tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>% 
@@ -103,7 +107,7 @@ movies_rating %>%
   ggplot2::ggplot() +
   ggplot2::geom_col(ggplot2::aes(x = year, y = n, fill = rating)) +
   ggplot2::scale_x_continuous(expand = c(0.01,0.01), breaks = movies_rating$year) +
-  ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, 130)) +
+  ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, by = 25)) +
   ggplot2::scale_fill_viridis_d(
     direction = 1 ,
     option = "viridis",
@@ -112,13 +116,16 @@ movies_rating %>%
       keywidth = grid::unit(9, units = "mm")
     )
   ) +
-  ggplot2::annotate(geom = "text", x = 2005, y = 25, label = "PASS", colour = "black", size = 10) +
+  #ggplot2::annotate(geom = "text", x = 2005, y = 25, label = "PASS", colour = "black", size = 10) +
   # ggplot2::annotate(geom = "text", x = 2005, y = 69, label = "FAIL", colour = "black", size = 9) +
   ggplot2::labs(x = "Ano de lançamento", y = "Quantidade de filmes", fill = "Pontuação - Teste de Bechdel") +
-  ggplot2::theme_minimal(13) +
-  #ggthemes::theme_clean(13)+
+  ggplot2::ggtitle("Quantidade de Filmes - Pontuação pelo Teste de Bechdel") +
+  #ggplot2::theme_minimal(13) +
+  ggthemes::theme_clean(base_family = font_grafico)+
   ggplot2::theme(
-    text = ggplot2::element_text(color = "#22211d"),
+    text = ggplot2::element_text(color = "#22211d", family = font_grafico),
+    plot.title = ggplot2::element_text(hjust = 0.5),
+    
     plot.background = ggplot2::element_rect(fill = "#f5f5f2", color = NA),
     panel.background = ggplot2::element_rect(fill = "#f5f5f2", color = NA),
     legend.background = ggplot2::element_rect(fill = "transparent", colour = NA),
@@ -129,19 +136,59 @@ movies_rating %>%
     axis.ticks.y = ggplot2::element_blank(),
     
     legend.position = c(.35, .78),
-    legend.title = ggplot2::element_text(face = "bold"),
+    legend.text = ggplot2::element_text(family = font_grafico),
+    legend.title = ggplot2::element_text(face = "bold", family = font_grafico),
     
-    panel.grid.major.y = ggplot2::element_line(size = .7, color = "#dddddd", linetype = "dashed"),
+    panel.grid.major.y = ggplot2::element_line(size = .75, color = "#dddddd", linetype = "dashed"),
     #panel.grid = ggplot2::element_blank()
-    )
-
+    plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm")
+  ) 
+  # ggtext::geom_textbox(
+  #   aes(x = 2005, y = 25, label = "*PASS*"),
+  #   height = grid::unit(8, "mm"),
+  #   width = grid::unit(15, "mm"),
+  #   # 73% of plot panel width
+  #   hjust = 0,
+  #   vjust = 1,
+  # )
+  # ggtext::geom_richtext(
+  #   ggplot2::aes(
+  #     x = 2005,
+  #     y = 25,
+  #     label = "*PASS*",
+  #     fill = after_scale(alpha("#70af85", .5))
+  #   ),
+  #   text.colour = "black",
+  #   hjust = 1, vjust = 1,
+  #   #size = 10
+  # )
 
 
 # quantidade de filmes por ano e por resultado (%)
 
+movies_rating %>% 
+  dplyr::mutate(rating = as.character(rating)) %>% 
+  tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>% 
+  
+  dplyr::group_by(year, binary, rating) %>% 
+  dplyr::arrange(year) %>% 
+  dplyr::summarise(n = dplyr::n()) %>% 
+  ggplot2::ggplot() +
+  ggplot2::geom_col(ggplot2::aes(x = year, y = n, fill = rating), position = "fill") +
+  ggplot2::scale_x_continuous(expand = c(0.01,0.01), breaks = movies_rating$year) +
+  #ggplot2::scale_y_continuous(expand = c(0,0), limits = c(0, 150), breaks = seq(0, 150, by = 25)) +
+  ggplot2::scale_fill_viridis_d(
+    direction = 1 ,
+    option = "viridis"
+    )
+  
 
 
-# pegando o código das cores da paletta viridis
-scales::show_col(viridis::viridis_pal(option = "viridis")(4)) 
+# quantidade de filmes por gênero
+
+
+# filmes com um lucro maior tendem a passar no teste de bechdel?
+
+# filmes com boas notas no imdb tendem a passar no teste de bechdel?
 
 
