@@ -10,34 +10,15 @@
   # 3.
 
 
-# importar base
+
+# Importar base -----------------------------------------------------------
 movies_rating <- readr::read_rds("./R/2021-04-09_movies_rating_bechdel_test.rds")
+raw_bechdel <- readr::read_rds("./R/2021-04-11_raw_bechdel_with_legends.rds")
 
-# explorar base
+
+
+# Explorar dados ----------------------------------------------------------
 dplyr::glimpse(movies_rating)
-
-# verificar itens
-unique(movies_rating$rating)
-
-# tem uma linha que não apresenta rank númerico
-movies_rating %>% 
-  dplyr::filter(is.na(rating)) %>% 
-  View()
-
-  # porém ela apresenta um resultado de "pass"no teste
-
-# corrigir essa linha
-movies_rating$rating <-
-  movies_rating$rating %>%
-  tidyr::replace_na(replace = 3)
-
-movies_rating$description <-
-  movies_rating$description %>%
-  tidyr::replace_na(replace = "About something besides a man")
-
-movies_rating$descricao <-
-  movies_rating$descricao %>%
-  tidyr::replace_na(replace = "As mulheres falam entre si sobre algo que não seja um homem")
 
 
 # 1. resultado do teste na base histórica
@@ -50,7 +31,6 @@ total_de_filmes
 movies_rating %>% 
   dplyr::group_by(year) %>% 
   dplyr::summarise(n = dplyr::n())
-
 
 
 # Visualizar dados --------------------------------------------------------
@@ -175,6 +155,8 @@ movies_rating %>%
            curvature = -0.2,
            arrow = ggplot2::arrow(length = grid::unit(0.03, "npc")))
            
+# quantidade por ano até 2020
+
 
 # quantidade de filmes por ano e por resultado (%)
 #plot <-
@@ -227,12 +209,26 @@ ggplot2::ggsave(filename = "./outputs/plot_quant_movies.png",
                 dpi = 300)
 
 
+# quantidade de filmes por orçamento
+movies_rating %>% 
+  dplyr::mutate(rating = as.character(rating)) %>% 
+  tidyr::unite("rating", c("rating", "descricao"), sep = " - ") %>% 
+  dplyr::group_by(rating, binary) %>% 
+  dplyr::summarise(total_orcamento = mean(budget_2013, na.rm = TRUE))
+
 
 
 # quantidade de filmes por país
-
+movies_rating %>% 
+  dplyr::filter(!is.na(country)) %>% 
+  dplyr::group_by(country, rating, binary) %>% 
+  dplyr::summarise(n = dplyr::n()) %>% 
+  dplyr::arrange(dplyr::desc(n))
 
 
 # filmes com boas notas no imdb tendem a passar no teste de bechdel?
-
+movies_rating %>% 
+  dplyr::group_by(imdb_rating, rating) %>% 
+  dplyr::summarise(media = mean(imdb_rating)) %>% 
+  dplyr::arrange(dplyr::desc(media))
 
