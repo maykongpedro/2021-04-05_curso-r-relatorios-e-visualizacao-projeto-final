@@ -55,6 +55,9 @@ movies_rating %>%
 
 # Visualizar dados --------------------------------------------------------
 
+# carregar função de thema
+source("./R/2021-04-11_funcoes_graficos.R")
+
 # definir fonte de texto para os gráficos
 windowsFonts(Palatino=windowsFont("Palatino Linotype"))
 font_family <- "Palatino"
@@ -66,14 +69,15 @@ scales::show_col(viridis::viridis_pal(option = "viridis")(7))
 # verde escuro
 #paleta_viridis_modificada <- c("#440154", "#443183", "#31688E", "#35B779")
 
-# verde claro
+# azul mais escuro + verde claro
+#paleta_viridis_modificada <- c("#440154", "#443183", "#31688E", "#8FD744")
+
+# azul mais claro + verde claro
 paleta_viridis_modificada <- c( "#443183", "#31688E", "#21908C","#8FD744")
 
-# verde claro
-paleta_viridis_modificada <- c("#440154", "#443183", "#31688E", "#8FD744")
 
-
-# definir nota de rodapé
+# definir notas
+subtitulo <- paste0("Base de dados com ", total_de_filmes, " filmes.")
 nota_rodape <- "FONTE: Dados Bechdel Test - TidyTuesday: Week 11 (2021)"
 
 
@@ -222,10 +226,6 @@ ggplot2::ggsave(filename = "./outputs/plot_quant_movies.png",
                 height = 8,
                 dpi = 300)
 
-
-
-# quantidade de filmes por gênero
-movies_rating
 
 
 
