@@ -100,9 +100,12 @@ movies_rating %>%
 #   tidyr::replace_na(replace = "As mulheres falam entre si sobre algo que não seja um homem")
 
 # verificar testes
-movies_rating %>% 
+tabela_explicativa <- 
+  movies_rating %>% 
   dplyr::group_by(rating, binary, clean_test) %>% 
   dplyr::summarise(n = dplyr::n())
+
+tabela_explicativa
 
 # é preciso corrigir a coluna "rating", pois somente o que foi rankeado com 3 é que passa no teste
 # contudo, considerando que a base "movies" possui mais colunas referentes à classificação, vou optar
@@ -150,10 +153,12 @@ movies_rating <-
                                           TRUE ~ binary))
 
 # validando
-movies_rating %>% 
+tabela_explicativa_correta <- 
+  movies_rating %>% 
   dplyr::group_by(rating, binary, clean_test) %>% 
   dplyr::summarise(n = dplyr::n())
 
+tabela_explicativa_correta
 
 # Exportar bases ----------------------------------------------------------
 
@@ -161,9 +166,13 @@ movies_rating %>%
 readr::write_rds(movies, "./dados/movies.rds")
 readr::write_rds(raw_bechdel, "./dados/raw_bechdel.rds")
 readr::write_rds(legend_rating, "./dados/legend_rating.rds")
+readr::write_rds(raw_bechdel_com_legenda, "./R/2021-04-11_raw_bechdel_with_legends.rds")
 readr::write_rds(movies_rating, "./R/2021-04-09_movies_rating_bechdel_test.rds")
+readr::write_rds(tabela_explicativa, "./R/2021-04-12_table_with_erros.rds")
+readr::write_rds(tabela_explicativa_correta, "./R/2021-04-12_table_correct.rds")
 
 
+# exportar bases em formato .xlsx
 # writexl::write_xlsx(movies, "./dados/movies.xlsx")
 # writexl::write_xlsx(raw_bechdel,"./dados/raw_bechdel.xlsx")
 # writexl::write_xlsx(movies_rating,"./dados/movies_rating.xlsx")
