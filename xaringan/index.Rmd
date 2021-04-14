@@ -3,13 +3,14 @@ title: "Análise TidyTuesday - Week 11: Teste de Bechdel"
 subtitle: "⚔<br/> Trabalho de Conclusão de Curso"
 author: "Maykon Gabriel G. Pedro"
 institute: "Aluno - Curso R"
-date: "`r Sys.Date()`"
+date: "13/04/2021 (Atualizado: `r format(Sys.Date(), '%d/%m/%Y')`)"
 output:
   xaringan::moon_reader:
-    chakra: libs/remark-latest.min.js
+    chakra: libs/remark-latest.min.js   # parâmetro para usar a biblioteca libs localmente
     lib_dir: libs
     css: [default, ninjutsu, rladies-fonts]
     nature:
+      ratio: "16:9"
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -24,10 +25,15 @@ style_duo_accent(
   title_slide_text_color = "#167ac6"
 )
 
+# efeturar o download da biblioteca lib para rodar a apresentação sem internet
 #::summon_remark()
 
 # para visualizar os tema disponíveis
 #names(xaringan:::list_css())
+
+# atalho legais para a apresentação:
+# F = Modo fullscreen
+# P = Modo de apresentação
 
 ```
 
@@ -188,7 +194,6 @@ Os gráficos a seguir tentam responder esses 5 pontos.
 ---
 
 # Histórico - Anos que apresentaram "FAIL"e "PASS"
-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', dpi=300}
 knitr::include_graphics("../outputs/historico_1.png")
 ```
@@ -197,16 +202,14 @@ knitr::include_graphics("../outputs/historico_1.png")
 
 ---
 # Histórico - Pontuação do Teste em números absolutos
-
-```{r echo=FALSE, fig.align='center', dpi=300}
+```{r echo=FALSE, fig.align='center', out.width="90%", dpi=300}
 knitr::include_graphics("../outputs/historico_2.png")
 ```
 
 
 ---
 # Histórico - Pontuação do Teste em números relativos
-
-```{r echo=FALSE, fig.align='center', dpi=300}
+```{r echo=FALSE, fig.align='center', out.width="80%", dpi=300}
 knitr::include_graphics("../outputs/historico_3.png")
 ```
 
@@ -214,20 +217,15 @@ knitr::include_graphics("../outputs/historico_3.png")
 
 ---
 # Orçamento - Média de orçamento por pontuação
-
-
-
-```{r echo=FALSE, fig.align='center', dpi=300}
+```{r echo=FALSE, fig.align='center', out.width="85%", dpi=300}
 knitr::include_graphics("../outputs/orcamento.png")
 ```
 
 
 
 ---
-# Notas de avaliação - Média de notas avaliativas no IMDB por pontuação
-
-
-```{r echo=FALSE, fig.align='center', dpi=300}
+# Avaliação - Média de notas avaliativas no IMDB por pontuação
+```{r echo=FALSE, fig.align='center', out.width="85%", dpi=300}
 knitr::include_graphics("../outputs/notas.png")
 ```
 
@@ -241,12 +239,11 @@ Sendo que, em matéria de média de orçamento e nota avaliativa, os filmes que 
 
 É preciso repensar o modo como consumimos entretenimento, para mudar a indústria aos poucos.
 
--- 
-Obrigado por ler esse materiala até aqui!
-
-Atenciosamente, Maykon.
-
 ---
+class: center middle
+
+Obrigado por ler esse material até aqui!
+
 
 
 
