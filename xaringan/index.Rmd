@@ -18,12 +18,12 @@ output:
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
-style_duo_accent(
-  primary_color = "#FFAEBC",
-  secondary_color = "#A0E7E5",
-  inverse_header_color = "#e91e63",
-  title_slide_text_color = "#167ac6"
-)
+# style_duo_accent(
+#   primary_color = "#FFAEBC",
+#   secondary_color = "#A0E7E5",
+#   inverse_header_color = "#e91e63",
+#   title_slide_text_color = "#167ac6",
+# )
 
 # efeturar o download da biblioteca lib para rodar a apresentação sem internet
 #::summon_remark()
