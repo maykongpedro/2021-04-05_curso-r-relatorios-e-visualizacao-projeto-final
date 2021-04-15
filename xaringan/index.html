@@ -5,6 +5,15 @@
     <meta charset="utf-8" />
     <meta name="author" content="Maykon Gabriel G. Pedro" />
     <script src="libs/header-attrs-2.7/header-attrs.js"></script>
+    <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+    <script src="libs/jquery-3.5.1/jquery.min.js"></script>
+    <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="libs/datatables-binding-0.17/datatables.js"></script>
+    <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+    <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -151,115 +160,10 @@ Entretanto, foi encontrado um problema com o teste em alguns filmes, pois, segui
 A tabela que resume a situação encontrada pode ser verificada no próximo slide.
 
 ---
+# Tabela com erros
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; rating &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; binary &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; clean_test &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; n &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 128 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 478 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; PASS &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 170 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; PASS &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; dubious &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 141 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; men &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; notalk &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; FAIL &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; nowomen &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; PASS &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 797 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; PASS &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; ok &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+<div id="htmlwidget-65a1e7d2d0e32c7a4a0f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-65a1e7d2d0e32c7a4a0f">{"x":{"filter":"none","fillContainer":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],[0,0,1,1,1,1,2,2,2,2,3,3,3,3,3,null],["FAIL","FAIL","FAIL","FAIL","FAIL","PASS","FAIL","FAIL","FAIL","PASS","FAIL","FAIL","FAIL","FAIL","PASS","PASS"],["notalk","nowomen","dubious","notalk","nowomen","ok","men","notalk","nowomen","ok","dubious","men","notalk","nowomen","ok","ok"],[1,128,1,478,6,1,170,9,2,4,141,24,26,5,797,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>rating<\/th>\n      <th>binary<\/th>\n      <th>clean_test<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollY":"350px","columnDefs":[{"className":"dt-right","targets":[1,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 
 --- 
 

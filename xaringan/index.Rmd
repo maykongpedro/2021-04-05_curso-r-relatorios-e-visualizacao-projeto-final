@@ -157,10 +157,15 @@ Entretanto, foi encontrado um problema com o teste em alguns filmes, pois, segui
 A tabela que resume a situação encontrada pode ser verificada no próximo slide.
 
 ---
+# Tabela com erros
 
-```{r echo=FALSE, paged.print=TRUE}
-errors %>% 
-  kableExtra::kable(format = "html")
+```{r echo=FALSE, fig.align='center'}
+# errors %>% 
+#   kableExtra::kable(format = "html")
+
+# como centralizar os dados dentro da tabela?
+DT::datatable(errors,
+  fillContainer = FALSE, options = list(pageLength = 10, scrollY = "350px"))
 ```
 
 --- 
