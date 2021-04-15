@@ -163,9 +163,22 @@ A tabela que resume a situação encontrada pode ser verificada no próximo slid
 # errors %>% 
 #   kableExtra::kable(format = "html")
 
+
 # como centralizar os dados dentro da tabela?
-DT::datatable(errors,
-  fillContainer = FALSE, options = list(pageLength = 10, scrollY = "350px"))
+errors %>%
+  DT::datatable(
+    #width = "600px",
+    fillContainer = TRUE,
+    options = list(
+      pageLength = 10,
+      scrollY = "350px",
+      columnDefs = list(list(
+        className = 'dt-center', targets = "_all"
+      ))
+    )
+  ) %>%
+  DT::formatStyle(columns = c("rating", "binary", "clean_test", "n"),
+                  textAlign = 'center')
 ```
 
 --- 
