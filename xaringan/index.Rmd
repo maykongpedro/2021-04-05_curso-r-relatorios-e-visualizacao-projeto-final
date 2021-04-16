@@ -222,8 +222,8 @@ Os gráficos a seguir tentam responder esses 5 pontos.
 ---
 
 # Histórico - Anos que apresentaram "FAIL"e "PASS"
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', dpi=300}
-knitr::include_graphics("../outputs/historico_1.png")
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center', out.width="90%", dpi=300}
+knitr::include_graphics("./img/historico_1.png")
 ```
 
 
@@ -231,14 +231,14 @@ knitr::include_graphics("../outputs/historico_1.png")
 ---
 # Histórico - Pontuação do Teste em números absolutos
 ```{r echo=FALSE, fig.align='center', out.width="90%", dpi=300}
-knitr::include_graphics("../outputs/historico_2.png")
+knitr::include_graphics("./img/historico_2.png")
 ```
 
 
 ---
 # Histórico - Pontuação do Teste em números relativos
 ```{r echo=FALSE, fig.align='center', out.width="80%", dpi=300}
-knitr::include_graphics("../outputs/historico_3.png")
+knitr::include_graphics("./img/historico_3.png")
 ```
 
 
@@ -246,7 +246,7 @@ knitr::include_graphics("../outputs/historico_3.png")
 ---
 # Orçamento - Média de orçamento por pontuação
 ```{r echo=FALSE, fig.align='center', out.width="85%", dpi=300}
-knitr::include_graphics("../outputs/orcamento.png")
+knitr::include_graphics("./img/orcamento.png")
 ```
 
 
@@ -254,7 +254,7 @@ knitr::include_graphics("../outputs/orcamento.png")
 ---
 # Avaliação - Média de notas avaliativas no IMDB por pontuação
 ```{r echo=FALSE, fig.align='center', out.width="85%", dpi=300}
-knitr::include_graphics("../outputs/notas.png")
+knitr::include_graphics("./img/notas.png")
 ```
 
 
